@@ -1,0 +1,14 @@
+---
+/** The 8-point star icon used inside every badge. */
+interface Props {
+  class?: string;
+}
+const { class: className = 'badge-icon' } = Astro.props;
+---
+
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" class={className}>
+  <rect x="5" width="2" height="12" fill="currentColor"></rect>
+  <rect x="9.53564" y="1.05029" width="2" height="12" transform="rotate(45 9.53564 1.05029)" fill="currentColor"></rect>
+  <rect x="12" y="5" width="2" height="12" transform="rotate(90 12 5)" fill="currentColor"></rect>
+  <rect x="10.9497" y="9.53564" width="2" height="12" transform="rotate(135 10.9497 9.53564)" fill="currentColor"></rect>
+</svg>

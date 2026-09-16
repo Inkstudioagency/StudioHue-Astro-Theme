@@ -1,0 +1,52 @@
+---
+/**
+ * <PrimaryButton label="Start Your Project" href="/contact" variant="base" />
+ * variants: base (brand), secondary (outline, used in the navbar), bg-black, pricing, pricing-primary
+ */
+interface Props {
+  label: string;
+  href: string;
+  variant?: 'base' | 'secondary' | 'bg-black' | 'pricing' | 'pricing-primary';
+  target?: string;
+}
+const { label, href, variant = 'base', target } = Astro.props;
+
+const SECONDARY = '4f7104bd-54b2-0f4b-648a-a9405bcf4a72';
+const BG_BLACK = 'f17ae8d0-402b-ef22-0107-f56171467974';
+const COMPONENT_ID = 'fe6f4be6-50ca-05e1-38e9-9a6e9da8d773';
+
+const isPricing = variant === 'pricing' || variant === 'pricing-primary';
+const variantState = variant === 'secondary' ? SECONDARY : variant === 'bg-black' ? BG_BLACK : 'base';
+const wfAttrs = isPricing
+  ? {}
+  : {
+      'data-wf--primary-button--variant': variant,
+      'data-wf-component-id': COMPONENT_ID,
+      'data-wf-variant-state': variantState,
+    };
+const linkClass = isPricing
+  ? ['primary-button', 'pricing', variant === 'pricing-primary' && 'color-primary', 'w-inline-block']
+  : ['primary-button', variantState !== 'base' && `w-variant-${variantState}`, 'w-inline-block'];
+---
+
+{isPricing ? (
+  <a href={href} class:list={linkClass}>
+    <div class="button-dot bg-black">
+      <div class="animated-dot bg-black"></div>
+    </div>
+    <div class="button-text-wrap bg-black">
+      <div class="footer-link-text bg-black">{label}</div>
+      <div class="footer-link-text bg-black is-two">{label}</div>
+    </div>
+  </a>
+) : (
+  <a href={href} target={target} {...wfAttrs} class:list={linkClass}>
+    <div class="button-dot">
+      <div class:list={['animated-dot', variant === 'secondary' && `w-variant-${SECONDARY}`]}></div>
+    </div>
+    <div class="button-text-wrap">
+      <div class="footer-link-text">{label}</div>
+      <div class="footer-link-text is-two">{label}</div>
+    </div>
+  </a>
+)}

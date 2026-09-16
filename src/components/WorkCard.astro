@@ -1,0 +1,43 @@
+---
+/** Project card (home slider, /work grid, "Similar Work"). */
+import type { ProjectEntry } from '../lib/content';
+import { projectUrl } from '../lib/content';
+
+interface Props {
+  project: ProjectEntry;
+  /** `sizes` hint for the cover image – differs between the home slider and the work grid. */
+  sizes?: string;
+}
+const { project, sizes = '(max-width: 767px) 100vw, (max-width: 991px) 95vw, 939px' } = Astro.props;
+const { title, serial, services, image, shortSummary, year } = project.data;
+const href = projectUrl(project.data.slug);
+---
+
+<div class="work-card">
+  <a href={href} class="work-card-img-block w-inline-block">
+    <div class="card-top">
+      <div>{serial}</div>
+      <div class="pill-wrap">
+        {services.filter(Boolean).map((service) => (
+          <div class="work-pill">
+            <div class="pill-text">{service}</div>
+          </div>
+        ))}
+      </div>
+    </div><img src={image} loading="lazy" alt="" sizes={sizes} class="work-img">
+    <div class="demo">#</div>
+  </a>
+  <div class="work-card-info-wrap">
+    <div class="work-card-left">
+      <div class="dot"></div>
+      <div class="work-content-wrap">
+        <a href={href} class="work-title-link w-inline-block">
+          <div>{title}</div>
+          <div class="demo">#</div>
+        </a>
+        <p class="font-regular tertiary">{shortSummary}</p>
+      </div>
+    </div>
+    <div class="font-regular">{year}</div>
+  </div>
+</div>

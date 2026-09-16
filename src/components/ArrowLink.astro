@@ -1,0 +1,28 @@
+---
+/**
+ * <ArrowLink label="Read Article" href="…" /> – text link with the double-arrow hover
+ * animation and animated underline (Webflow class: blog-button).
+ *  - `black`  dark text/underline variant (used on light backgrounds)
+ *  - `hero`   the larger hero-card variant (blog-button-item.home-hero)
+ */
+interface Props {
+  label: string;
+  href: string;
+  black?: boolean;
+  hero?: boolean;
+  current?: boolean;
+}
+const { label, href, black = false, hero = false, current = false } = Astro.props;
+---
+
+<a href={href} aria-current={current ? 'page' : undefined} class:list={['blog-button', black && 'text-black', 'w-inline-block', current && 'w--current']}>
+  <div class:list={['blog-button-item', hero && 'home-hero']}>
+    <div>{label}</div>
+    <div class="button-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 18 18" fill="none" class="button-arrow">
+        <path d="M10.5 3.69727L9.375 4.82227L12.8027 8.25H2.25V9.75H12.8027L9.375 13.1777L10.5 14.3027L15.8027 9L10.5 3.69727Z" fill="currentColor"></path>
+      </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 18 18" fill="none" class="button-arrow">
+        <path d="M10.5 3.69727L9.375 4.82227L12.8027 8.25H2.25V9.75H12.8027L9.375 13.1777L10.5 14.3027L15.8027 9L10.5 3.69727Z" fill="currentColor"></path>
+      </svg></div>
+  </div>
+  <div class:list={['button-animated-line', black && 'black']}></div>
+</a>

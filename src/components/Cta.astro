@@ -1,0 +1,47 @@
+---
+/** "Ready for the next step?" call-to-action block + contact cards (config.json → cta / contact). */
+import config from '../config/config.json';
+import PrimaryButton from './PrimaryButton.astro';
+
+const { cta, contact } = config;
+---
+
+<section data-wf-component-id="b480eae9-8cce-6d92-8b5a-29c21d2bf16e" data-wf-variant-state="base" class="section smoky-black">
+  <div class="section-gap cta">
+    <div class="w-layout-blockcontainer container w-container">
+      <div class="cta-top">
+        <div class="cta-top-left">
+          <h2 class="cta-heading">{cta.heading}</h2>
+          <div class="max-width-35">
+            <p class="font-regular tertiary">{cta.text}</p>
+          </div>
+          <div class="cta-button-wrap">
+            <PrimaryButton label={cta.button_label} href={cta.button_link} />
+          </div>
+        </div>
+        <div class="cta-top-right"><img loading="lazy" src={cta.image} alt={cta.image_alt} sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px" srcset="/images/Rectangle-25-p-500.webp 500w, /images/Rectangle-25-p-800.webp 800w, /images/Rectangle-25-p-1080.webp 1080w, /images/Rectangle-25.webp 1326w" class="cta-card-img">
+          <div class="cta-item-wrap">
+            <div class="reviewer-img-wrap"><img loading="lazy" src="/images/man.webp" alt="Smiling young man with glasses and wavy brown hair wearing a black shirt in a bright space." sizes="(max-width: 560px) 100vw, 560px" srcset="/images/7098886df02b2521176bde95e31347ff1428d87f-p-500.webp 500w, /images/man.webp 560w" class="reviewer-img"><img loading="lazy" src="/images/man-.webp" alt="Young man with medium-length hair stands outdoors in sunlight near trees and water." sizes="(max-width: 560px) 100vw, 560px" srcset="/images/1d9fc18c60dcd095e135579192e08e783234075d-p-500.webp 500w, /images/man-.webp 560w" class="reviewer-img"><img loading="lazy" src="/images/Rectangle-22_1Rectangle-22.webp" alt="Young man with curly blond hair wearing a black hat smiling softly against a light background." class="reviewer-img"></div>
+            <div class="font-normal white medium">{cta.clients_label}</div>
+          </div>
+        </div>
+      </div>
+      <div class="w-layout-grid cta-info-grid">
+        <div class="cta-card">
+          <div class="contact-card-title">GENERAL ENQUIRIES</div>
+          <a href={`mailto:${contact.general_email}`} class="contact-info">{contact.general_email}</a>
+        </div>
+        <div class="cta-card">
+          <div class="contact-card-title">NEW BUSINESS</div>
+          <a href={`mailto:${contact.business_email}`} class="contact-info">{contact.business_email}</a>
+        </div>
+        <div class="cta-card">
+          <div class="contact-card-title">STUDIO</div>
+          <div class="max-width-35-copy">
+            <div class="location">{contact.address}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

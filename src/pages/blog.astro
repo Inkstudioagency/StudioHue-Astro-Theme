@@ -1,0 +1,70 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Cta from '../components/Cta.astro';
+import FeaturedPostCard from '../components/FeaturedPostCard.astro';
+import BlogCardMain from '../components/BlogCardMain.astro';
+import { getFeaturedPost, getRegularPosts } from '../lib/content';
+
+const featured = await getFeaturedPost();
+const posts = await getRegularPosts();
+---
+<Base page="blog" title="Blog" description="Read StudioHue insights on branding, Webflow, UI/UX, design trends, creative strategy, and practical ideas to help businesses grow with confidence.">
+  <div class="page-wrapper">
+    <div class="hero-area">
+      <Header />
+      <section class="section">
+        <div class="section-gap bottom-6xl">
+          <div class="w-layout-blockcontainer container w-container">
+            <div class="inner-hero-header">
+              <div class="inner-hero-left blog">
+                <div class="inner-badge">
+                  <div class="badge-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" class="badge-icon">
+                      <rect x="5" width="2" height="12" fill="currentColor"></rect>
+                      <rect x="9.53564" y="1.05029" width="2" height="12" transform="rotate(45 9.53564 1.05029)" fill="currentColor"></rect>
+                      <rect x="12" y="5" width="2" height="12" transform="rotate(90 12 5)" fill="currentColor"></rect>
+                      <rect x="10.9497" y="9.53564" width="2" height="12" transform="rotate(135 10.9497 9.53564)" fill="currentColor"></rect>
+                    </svg></div>
+                  <div class="badge-text">INSIGHTS &amp; RESOURCES</div>
+                </div>
+                <div class="hero-heading-wrap">
+                  <h1 class="hero-heading">Notes on  brand &amp; craft.</h1>
+                </div>
+              </div>
+              <div class="inner-hero-right blog">
+                <p class="inner-hero-summary">Discover practical guides, design trends, Webflow tips, branding strategies, and creative insights from the StudioHue team to help your business grow with confidence.</p>
+              </div>
+            </div>
+            {featured && (
+              <div class="blog-collection-wrap">
+                <div class="w-dyn-list">
+                  <div role="list" class="w-dyn-items">
+                    <div role="listitem" class="w-dyn-item">
+                      <FeaturedPostCard post={featured} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            <div class="blog-collection-wrap">
+              <div class="w-dyn-list">
+                <div role="list" class="post-collection-list w-dyn-items">
+                  {posts.map((post) => (
+                    <div role="listitem" class="w-dyn-item">
+                      <BlogCardMain post={post} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="main">
+      <Cta />
+    </div>
+    <Footer page="blog" />
+  </div>
+</Base>

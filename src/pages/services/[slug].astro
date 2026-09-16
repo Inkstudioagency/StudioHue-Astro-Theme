@@ -1,0 +1,83 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Cta from '../../components/Cta.astro';
+import { getServices } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const services = await getServices();
+  return services.map((entry) => ({ params: { slug: entry.data.slug }, props: { service: entry.data } }));
+}
+
+const { service } = Astro.props;
+---
+<Base title={service.title} description={service.shortSummary} image={service.image} rawTitle page="serviceDetail">
+  <div class="page-wrapper">
+    <div class="hero-area">
+      <Header />
+      <section class="section">
+        <div class="section-gap">
+          <div class="w-layout-blockcontainer container w-container">
+            <div class="inner-hero-header">
+              <div class="inner-hero-left">
+                <div class="badge">
+                  <div class="badge-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" class="badge-icon">
+                      <rect x="5" width="2" height="12" fill="currentColor"></rect>
+                      <rect x="9.53564" y="1.05029" width="2" height="12" transform="rotate(45 9.53564 1.05029)" fill="currentColor"></rect>
+                      <rect x="12" y="5" width="2" height="12" transform="rotate(90 12 5)" fill="currentColor"></rect>
+                      <rect x="10.9497" y="9.53564" width="2" height="12" transform="rotate(135 10.9497 9.53564)" fill="currentColor"></rect>
+                    </svg></div>
+                  <div class="badge-text">OUR SERVICES</div>
+                </div>
+                <div class="hero-heading-wrap">
+                  <h1 class="service-hero-heading">{service.detailsHeading}</h1>
+                </div>
+              </div>
+              <div class="inner-hero-right">
+                <p class="inner-hero-summary">{service.shortSummary}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-img-wrap"><img src={service.image} loading="lazy" alt="" sizes="100vw" class="inner-hero-image"></div>
+      </section>
+    </div>
+    <div class="main">
+      <section class="section">
+        <div class="section-gap bottom-6xl">
+          <div class="w-layout-blockcontainer container w-container">
+            <div class="service-details-wrap">
+              <div class="about-badge">
+                <div class="badge-icon-wrap brand-color"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" class="badge-icon white">
+                    <rect x="5" width="2" height="12" fill="currentColor"></rect>
+                    <rect x="9.53564" y="1.05029" width="2" height="12" transform="rotate(45 9.53564 1.05029)" fill="currentColor"></rect>
+                    <rect x="12" y="5" width="2" height="12" transform="rotate(90 12 5)" fill="currentColor"></rect>
+                    <rect x="10.9497" y="9.53564" width="2" height="12" transform="rotate(135 10.9497 9.53564)" fill="currentColor"></rect>
+                  </svg></div>
+                <div class="badge-text brand-color">WHAT WE BELIEVE</div>
+              </div>
+              <div class="service-details-content w-richtext" set:html={service.details01}></div>
+              <div class="service-card-wrap">
+                {service.benefits.map((benefit, index) => (
+                  <div class="service-details-card">
+                    <div class="service-number">{String(index + 1).padStart(2, '0')}</div>
+                    <div class="benefit-details w-richtext" set:html={benefit}></div>
+                  </div>
+                ))}
+              </div>
+              <div class="service-details-content w-richtext" set:html={service.details02}></div>
+              <div class="service-list-wrap">
+                {service.industries.map((industries) => (
+                  <div class="service-list-content w-richtext" set:html={industries}></div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <Cta />
+    </div>
+    <Footer page="serviceDetail" />
+  </div>
+</Base>

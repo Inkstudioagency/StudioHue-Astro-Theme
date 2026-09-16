@@ -1,0 +1,65 @@
+---
+/** Site footer: newsletter form, link columns (menu.json) and the large wordmark. */
+import config from '../config/config.json';
+import menu from '../config/menu.json';
+import { wfPages, type WfPageKey } from '../lib/webflow-pages';
+
+interface Props {
+  page: WfPageKey;
+}
+const { page } = Astro.props;
+const { footer } = config;
+const { pathname } = Astro.url;
+const isCurrent = (url: string) => url === '/' ? pathname === '/' : pathname === url;
+---
+
+<section data-wf-component-id="21d974b1-70a1-c74e-09ac-014e434b6e9a" data-wf-variant-state="base" class="section footer">
+  <div class="section-gap footer">
+    <div class="w-layout-blockcontainer container w-container">
+      <div class="footer-top">
+        <div class="footer-top-left">
+          <div class="footer-title">{footer.newsletter_title}</div>
+          <div class="footer-form-main w-form">
+            <form id="email-form" name="email-form" data-name="Email Form" method="get" class="footer-form" data-wf-page-id={wfPages[page].id} data-wf-element-id="21d974b1-70a1-c74e-09ac-014e434b6ea2"><input class="footer-form-field w-input" maxlength="256" name="email" data-name="Email" aria-label="Email" placeholder={footer.newsletter_placeholder} type="email" id="email" required=""><input type="submit" data-wait="Please wait..." class="footer-form-button w-button" value={footer.newsletter_button}></form>
+            <div class="success-message w-form-done">
+              <div>Thank you! Your submission has been received!</div>
+            </div>
+            <div class="error-message w-form-fail">
+              <div>Oops! Something went wrong while submitting the form.</div>
+            </div>
+          </div>
+        </div>
+        <div class="footr-top-right">
+          {menu.footer.map((column) => (
+            <div class="footer-menu">
+              <div class="footer-menu-text">{column.title}</div>
+              <div class="footer-link-wrap">
+                {column.links.map((link) => (
+                  <a href={link.url} target={'target' in link ? link.target : undefined} aria-current={isCurrent(link.url) ? 'page' : undefined} class:list={['footer-link', 'w-inline-block', isCurrent(link.url) && 'w--current']}>
+                    <div class="footer-text is-one">{link.name}</div>
+                    <div class="footer-text is-two">{link.name}</div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-large-title">{footer.large_title}</div>
+        <div class="footer-absolute-bottom">
+          <div class="font-regular tertiary">{footer.copyright} <a href={footer.designer_link} target="_blank" class="footer-link-block">{footer.designer_name}</a> - Powered by <a href={footer.powered_by_link} target="_blank" class="footer-link-block">{footer.powered_by_name}</a>
+          </div>
+          <div class="footer-bottom-right">
+            {menu.footer_bottom.map((link) => (
+              <a href={link.url} class="footer-link w-inline-block">
+                <div class="footer-text is-one">{link.name}</div>
+                <div class="footer-text is-two">{link.name}</div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,33 @@
+---
+/** Compact post card (home "Latest thinking" + post detail "Latest thinking"). */
+import type { PostEntry } from '../lib/content';
+import { postUrl, formatDate } from '../lib/content';
+import ArrowLink from './ArrowLink.astro';
+
+interface Props {
+  post: PostEntry;
+  sizes?: string;
+}
+const { post, sizes = '(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px' } = Astro.props;
+const { title, image, category, date } = post.data;
+const href = postUrl(post.data.slug);
+const current = Astro.url.pathname === href;
+---
+
+<div class="blog-card">
+  <a href={href} aria-current={current ? 'page' : undefined} class:list={['blog-card-img-wrap', 'w-inline-block', current && 'w--current']}><img src={image} loading="lazy" alt="" sizes={sizes} class="blog-card-img">
+    <div class="demo">#</div>
+  </a>
+  <div class="post-card-info-wrap">
+    <div class="post-date-wrap">
+      <div class="post-category">{category}</div>
+      <div class="post-devider-date"></div>
+      <div class="post-date">{formatDate(date)}</div>
+    </div>
+    <a href={href} aria-current={current ? 'page' : undefined} class:list={['post-title-link', 'w-inline-block', current && 'w--current']}>
+      <div class="post-title">{title}</div>
+      <div class="demo">#</div>
+    </a>
+    <ArrowLink label="Read Article" href={href} black current={current} />
+  </div>
+</div>

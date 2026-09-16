@@ -1,0 +1,33 @@
+---
+/** Service card used on the home page (tabbed grid + mobile slider). */
+import type { ServiceEntry } from '../lib/content';
+import { serviceUrl } from '../lib/content';
+import ArrowLink from './ArrowLink.astro';
+
+interface Props {
+  service: ServiceEntry;
+  /** Mobile slider variant: hides the list on small screens and uses the "Read Article" label. */
+  slide?: boolean;
+}
+const { service, slide = false } = Astro.props;
+const { title, image, shortSummary, cardDetails } = service.data;
+const href = serviceUrl(service.data.slug);
+const sizes = slide ? '(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px' : '(max-width: 479px) 100vw, (max-width: 767px) 49vw, (max-width: 991px) 356px, 462px';
+---
+
+<div class="service-card">
+  <a href={href} class="service-img-wrap w-inline-block"><img src={image} loading="lazy" alt="" sizes={sizes} class="service-card-img">
+    <div class="demo">#</div>
+  </a>
+  <div class="service-info-card">
+    <div class="service-info-top">
+      <a href={href} class="service-title-link w-inline-block">
+        <div class="service-card-title">{title}</div>
+        <div class="demo">#</div>
+      </a>
+      <p class="service-short-summary">{shortSummary}</p>
+    </div>
+    <div class:list={['service-list', slide && 'hide-mobile', 'w-richtext']} set:html={cardDetails}></div>
+    <ArrowLink label={slide ? 'Read Article' : 'View Service'} href={href} />
+  </div>
+</div>

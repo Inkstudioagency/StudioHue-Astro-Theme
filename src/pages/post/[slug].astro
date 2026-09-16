@@ -1,0 +1,113 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Cta from '../../components/Cta.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getPosts, getRegularPosts, formatDate } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((entry) => ({ params: { slug: entry.data.slug }, props: { post: entry.data } }));
+}
+
+const { post } = Astro.props;
+const latestPosts = (await getRegularPosts()).slice(0, 3);
+---
+<Base title={post.title} description={post.summary} image={post.image} rawTitle page="post">
+  <div class="page-wrapper">
+    <div class="hero-area">
+      <Header />
+      <section class="section">
+        <div class="section-gap bottom-3xl">
+          <div class="w-layout-blockcontainer container w-container">
+            <div class="inner-hero-header">
+              <div class="inner-hero-left">
+                <div class="inner-badge">
+                  <div class="badge-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" class="badge-icon">
+                      <rect x="5" width="2" height="12" fill="currentColor"></rect>
+                      <rect x="9.53564" y="1.05029" width="2" height="12" transform="rotate(45 9.53564 1.05029)" fill="currentColor"></rect>
+                      <rect x="12" y="5" width="2" height="12" transform="rotate(90 12 5)" fill="currentColor"></rect>
+                      <rect x="10.9497" y="9.53564" width="2" height="12" transform="rotate(135 10.9497 9.53564)" fill="currentColor"></rect>
+                    </svg></div>
+                  <div class="badge-text">Brand Strategy</div>
+                </div>
+                <div class="hero-heading-wrap">
+                  <h1 class="blog-hero-heading">{post.title}</h1>
+                </div>
+              </div>
+              <div class="blog-hero-right">
+                <div class="font-small white">{formatDate(post.date)}</div>
+                <div class="devider-dot"></div>
+                <div class="font-small white">{post.readTime}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="blog-main-img-wrap"><img src={post.image} loading="lazy" alt={post.altText} sizes="100vw" class="blog-main-image"></div>
+      </section>
+    </div>
+    <div class="main">
+      <section class="section">
+        <div class="section-gap spaacer-6xl">
+          <div class="w-layout-blockcontainer container w-container">
+            <div class="post-body-main">
+              <div class="post-long-summary">{post.detailsSummary}</div>
+              <div class="post-body-content w-richtext" set:html={post.details01}></div>
+              <div class="post-quote-block"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 25 22" fill="none" class="quote-logo">
+                  <path d="M24.3985 22H14.0977V16.1085C14.0977 9.84407 16.203 4.47458 20.4135 0H25C21.8922 3.6791 20.0501 7.60678 19.4737 11.7831H24.3985V22ZM10.2256 22H0V16.1085C0 9.76949 2.10526 4.4 6.31579 0H10.8271C7.69424 3.65424 5.87719 7.58192 5.37594 11.7831H10.2256V22Z" fill="black" fill-opacity="0.2"></path>
+                </svg>
+                <div class="post-quote-text">{post.quoteText}</div>
+              </div>
+              <div class="post-body-content bottom w-richtext" set:html={post.details02}></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section warm-ivory">
+        <div class="section-gap spaacer-6xl">
+          <div class="w-layout-blockcontainer container w-container">
+            <div class="section-header">
+              <div class="serction-header-left max-width-30">
+                <div class="badge about-badge">
+                  <div class="badge-icon-wrap brand-color"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" class="badge-icon white">
+                      <rect x="5" width="2" height="12" fill="currentColor"></rect>
+                      <rect x="9.53564" y="1.05029" width="2" height="12" transform="rotate(45 9.53564 1.05029)" fill="currentColor"></rect>
+                      <rect x="12" y="5" width="2" height="12" transform="rotate(90 12 5)" fill="currentColor"></rect>
+                      <rect x="10.9497" y="9.53564" width="2" height="12" transform="rotate(135 10.9497 9.53564)" fill="currentColor"></rect>
+                    </svg></div>
+                  <div class="badge-text brand-color">LATEST THINKING</div>
+                </div>
+                <h2 class="section-heading black">From first insightto final launch.</h2>
+              </div>
+              <div class="section-header-right max-width-18">
+                <a href="/blog" data-wf--primary-button--variant="bg-black" data-wf-component-id="fe6f4be6-50ca-05e1-38e9-9a6e9da8d773" data-wf-variant-state="f17ae8d0-402b-ef22-0107-f56171467974" class="primary-button w-variant-f17ae8d0-402b-ef22-0107-f56171467974 w-inline-block">
+                  <div class="button-dot">
+                    <div class="animated-dot"></div>
+                  </div>
+                  <div class="button-text-wrap">
+                    <div class="footer-link-text">View All Articles</div>
+                    <div class="footer-link-text is-two">View All Articles</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="post-collection-wrap">
+              <div class="w-dyn-list">
+                <div role="list" class="post-collection-list w-dyn-items">
+                  {latestPosts.map((entry) => (
+                    <div role="listitem" class="w-dyn-item">
+                      <BlogCard post={entry} sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 939px" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <Cta />
+    </div>
+    <Footer page="post" />
+  </div>
+</Base>

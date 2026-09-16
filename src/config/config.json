@@ -1,0 +1,61 @@
+{
+  "site": {
+    "title": "StudioHue",
+    "title_suffix": " - StudioHue - Agency Astro Theme",
+    "base_url": "https://studiohue.example.com",
+    "logo": "/images/Frame-265_1Frame-265.webp",
+    "logo_alt": "Studio Hue logo with stylized S inside a square icon.",
+    "favicon": "/images/favicon.png",
+    "favicon_dark": "/images/favicon-dark.png",
+    "favicon_48": "/images/favicon-48.png",
+    "webclip": "/images/webclip.png",
+    "webclip_180": "/images/webclip-180.png",
+    "webclip_192": "/images/webclip-192.png"
+  },
+  "metadata": {
+    "meta_title": "StudioHue - Agency Astro Theme",
+    "meta_description": "StudioHue is a creative studio building bold brands and high-performing digital experiences through strategy, identity, Webflow, UI/UX, and design.",
+    "meta_image": "/images/og-image.webp",
+    "twitter_card": "summary_large_image"
+  },
+  "fonts": {
+    "google_families": [
+      "Geist:300,400,500,600,700",
+      "Instrument Serif:400"
+    ]
+  },
+  "contact": {
+    "general_email": "hello@studiohue.studio",
+    "business_email": "work@studiohue.studio",
+    "phone": "+61 3 9000 0000",
+    "phone_link": "tel:+61390000000",
+    "address": "350 High St, Hawthorn, Victoria 3144, Australia"
+  },
+  "cta": {
+    "heading": "Ready for the next step?",
+    "text": "Whether you're launching something new or reinventing your digital presence, StudioHue is here to help bring your vision to life.",
+    "button_label": "Get in touch",
+    "button_link": "/contact",
+    "image": "/images/Rectangle-25.webp",
+    "image_alt": "Abstract translucent digital shape resembling a jellyfish with glowing dots on a gray background.",
+    "clients_label": "12K+ Worldwide Client"
+  },
+  "footer": {
+    "newsletter_title": "Occasional notes on brand, craft and the studio. No noise.",
+    "newsletter_placeholder": "Email address",
+    "newsletter_button": "Subscribe",
+    "large_title": "StudioHue",
+    "copyright": "© 2025 StudioHue — Designed by",
+    "designer_name": "Ink Studio",
+    "designer_link": "#",
+    "powered_by_name": "Astro",
+    "powered_by_link": "https://astro.build"
+  },
+  "strapi": {
+    "collections": {
+      "services": "services",
+      "projects": "projects",
+      "blog": "posts"
+    }
+  }
+}

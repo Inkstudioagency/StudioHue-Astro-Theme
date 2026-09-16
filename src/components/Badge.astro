@@ -1,0 +1,20 @@
+---
+/**
+ * <Badge text="OUR SERVICES" /> – small label with the star icon.
+ *  - `class`  wrapper class from the design system (badge, about-badge, inner-badge, home-hero-badge, …)
+ *  - `brand`  use the brand-color variant (white icon on brand background, brand text)
+ */
+import BadgeIcon from './BadgeIcon.astro';
+
+interface Props {
+  text: string;
+  class?: string;
+  brand?: boolean;
+}
+const { text, class: className = 'badge', brand = false } = Astro.props;
+---
+
+<div class={className}>
+  <div class:list={['badge-icon-wrap', { 'brand-color': brand }]}><BadgeIcon class={brand ? 'badge-icon white' : 'badge-icon'} /></div>
+  <div class:list={['badge-text', { 'brand-color': brand }]}>{text}</div>
+</div>

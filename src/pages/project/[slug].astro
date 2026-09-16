@@ -1,0 +1,745 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Cta from '../../components/Cta.astro';
+import WorkCard from '../../components/WorkCard.astro';
+import { getProjects } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((entry) => ({ params: { slug: entry.data.slug }, props: { project: entry.data } }));
+}
+
+const { project } = Astro.props;
+// "Similar work": the next two projects in serial order, wrapping around.
+const all = await getProjects();
+const idx = all.findIndex((entry) => entry.data.slug === project.slug);
+const others = [...all.slice(idx + 1), ...all.slice(0, idx)];
+const similar = others.slice(0, 2);
+---
+<Base title={project.title} description={project.longSummary} image={project.image} rawTitle page="project">
+  <div class="page-wrapper">
+    <div class="hero-area">
+      <Header />
+      <section class="section">
+        <div class="section-gap bottom-3xl">
+          <div class="w-layout-blockcontainer container w-container">
+            <div class="project-hero-top">
+              <div class="inner-badge">
+                <div class="badge-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" class="badge-icon">
+                    <rect x="5" width="2" height="12" fill="currentColor"></rect>
+                    <rect x="9.53564" y="1.05029" width="2" height="12" transform="rotate(45 9.53564 1.05029)" fill="currentColor"></rect>
+                    <rect x="12" y="5" width="2" height="12" transform="rotate(90 12 5)" fill="currentColor"></rect>
+                    <rect x="10.9497" y="9.53564" width="2" height="12" transform="rotate(135 10.9497 9.53564)" fill="currentColor"></rect>
+                  </svg></div>
+                <div class="badge-text">CASE STUDY</div>
+              </div>
+              <div class="hero-heading-wrap">
+                <h1 class="project-heading">{project.mainHeading}</h1>
+              </div>
+            </div>
+            <div class="project-info-wrap">
+              <div class="project-info-left">
+                <div class="project-info-group">
+                  <div class="font-small">Industry</div>
+                  <div class="font-regular tertiary">{project.industry}</div>
+                </div>
+                <div class="project-info-group">
+                  <div class="font-small">Timeline</div>
+                  <div class="font-regular tertiary">{project.timeline}</div>
+                </div>
+                <div class="project-info-group">
+                  <div class="font-small">SERVICES</div>
+                  <div class="font-regular tertiary">{project.providedServices}</div>
+                </div>
+                <div class="project-info-group">
+                  <div class="font-small">Location</div>
+                  <div class="font-regular tertiary">{project.location}</div>
+                </div>
+              </div>
+              <div class="project-summary-wrap">
+                <p class="inner-hero-summary">{project.longSummary}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-img-wrap"><img src={project.image} loading="lazy" alt="" sizes="100vw" class="inner-hero-image"></div>
+      </section>
+    </div>
+    <div class="main">
+      <section class="section">
+        <div class="section-gap spaacer-6xl">
+          <div class="w-layout-blockcontainer container w-container">
+            <div class="w-layout-grid work-body-grid">
+              <div class="project-left-main">
+                <div class="project-left">
+                  <div class="project-title-wrap">
+                    <div class="project-left-title">Ready for the next step?</div>
+                  </div>
+                  <p class="font-normal">Whether you&#x27;re launching something new or reinventing your digital presence, StudioHue is here to help bring your vision to life.</p>
+                  <a href="/contact" data-wf--primary-button--variant="base" data-wf-component-id="fe6f4be6-50ca-05e1-38e9-9a6e9da8d773" data-wf-variant-state="base" class="primary-button w-inline-block">
+                    <div class="button-dot">
+                      <div class="animated-dot"></div>
+                    </div>
+                    <div class="button-text-wrap">
+                      <div class="footer-link-text">Get in touch</div>
+                      <div class="footer-link-text is-two">Get in touch</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="project-overview-wrap">
+                <div class="about-badge">
+                  <div class="badge-icon-wrap brand-color"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" class="badge-icon white">
+                      <rect x="5" width="2" height="12" fill="currentColor"></rect>
+                      <rect x="9.53564" y="1.05029" width="2" height="12" transform="rotate(45 9.53564 1.05029)" fill="currentColor"></rect>
+                      <rect x="12" y="5" width="2" height="12" transform="rotate(90 12 5)" fill="currentColor"></rect>
+                      <rect x="10.9497" y="9.53564" width="2" height="12" transform="rotate(135 10.9497 9.53564)" fill="currentColor"></rect>
+                    </svg></div>
+                  <div class="badge-text brand-color">OVERVIEW</div>
+                </div>
+                <div class="project-details-wrap">
+                  <div class="project-details w-richtext" set:html={project.details01}></div>
+                  <div class="w-layout-grid multi-img-grid">{project.images.filter(Boolean).map((image) => <img src={image} loading="lazy" alt="" sizes="(max-width: 991px) 23vw, 223px" class="project-multi-img" />)}</div>
+                  <div class="project-details w-richtext" set:html={project.details02}></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section smoky-black">
+        <div class="section-gap spaacer-6xl">
+          <div class="w-layout-blockcontainer container w-container">
+            <div class="section-header">
+              <div class="serction-header-left">
+                <h2 class="section-heading">Similar Work</h2>
+              </div>
+              <div class="section-header-right">
+                <a href="/work" data-wf--primary-button--variant="base" data-wf-component-id="fe6f4be6-50ca-05e1-38e9-9a6e9da8d773" data-wf-variant-state="base" class="primary-button w-inline-block">
+                  <div class="button-dot">
+                    <div class="animated-dot"></div>
+                  </div>
+                  <div class="button-text-wrap">
+                    <div class="footer-link-text">View All Projects</div>
+                    <div class="footer-link-text is-two">View All Projects</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="work-collection-wrap">
+              <div class="w-dyn-list">
+                <div role="list" class="work-collection-list w-dyn-items">
+                  {similar.map((entry) => (
+                    <div role="listitem" class="w-dyn-item">
+                      <WorkCard project={entry} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="section-gap spaacer-6xl">
+          <div class="w-layout-blockcontainer container w-container">
+            <div class="belive-header">
+              <div class="about-badge">
+                <div class="badge-icon-wrap brand-color"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" class="badge-icon white">
+                    <rect x="5" width="2" height="12" fill="currentColor"></rect>
+                    <rect x="9.53564" y="1.05029" width="2" height="12" transform="rotate(45 9.53564 1.05029)" fill="currentColor"></rect>
+                    <rect x="12" y="5" width="2" height="12" transform="rotate(90 12 5)" fill="currentColor"></rect>
+                    <rect x="10.9497" y="9.53564" width="2" height="12" transform="rotate(135 10.9497 9.53564)" fill="currentColor"></rect>
+                  </svg></div>
+                <div class="badge-text brand-color">FAQ</div>
+              </div>
+              <div class="heading-wrap">
+                <h2 class="section-heading black center">Everything You Need To Know Before We Work Together</h2>
+              </div>
+            </div>
+            <div class="faq-tab-wrap">
+              <div class="faq-left-top">
+                <div class="faq-title-wrap">
+                  <div class="faq-subtitle">A clear, four-stage process that keeps strategy and craft in lockstep no surprises, no wasted motion.</div>
+                </div>
+                <div class="faq-info-card hide-mobile"><img src="/images/Rectangle-15-1.webp" loading="lazy" alt="Side profile of a woman’s face with digital light streaks blending into her head and neck." class="hero-small-img">
+                  <div class="hero-card-right">
+                    <p class="hero-summary">Helping brands shine with smart digital experiences</p>
+                    <a href="/contact" class="blog-button w-inline-block">
+                      <div class="blog-button-item home-hero">
+                        <div>Book a Discovery Call</div>
+                        <div class="button-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 18 18" fill="none" class="button-arrow">
+                            <path d="M10.5 3.69727L9.375 4.82227L12.8027 8.25H2.25V9.75H12.8027L9.375 13.1777L10.5 14.3027L15.8027 9L10.5 3.69727Z" fill="currentColor"></path>
+                          </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 18 18" fill="none" class="button-arrow">
+                            <path d="M10.5 3.69727L9.375 4.82227L12.8027 8.25H2.25V9.75H12.8027L9.375 13.1777L10.5 14.3027L15.8027 9L10.5 3.69727Z" fill="currentColor"></path>
+                          </svg></div>
+                      </div>
+                      <div class="button-animated-line"></div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div data-current="Tab 1" data-easing="ease" data-duration-in="300" data-duration-out="100" class="faq-tab w-tabs">
+                <div class="faq-tab-menu w-tab-menu">
+                  <a data-w-tab="Tab 1" class="faq-tab-link w-inline-block w-tab-link w--current">
+                    <div class="faq-button-text">General</div><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-button-arrow">
+                      <path d="M9 6.6503C9 6.6503 15.9383 6.1076 16.9154 7.0846C17.8925 8.0617 17.3496 15 17.3496 15M16.5 7.5L6.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                  </a>
+                  <a data-w-tab="Tab 2" class="faq-tab-link w-inline-block w-tab-link">
+                    <div class="faq-button-text">Projects &amp; Process</div><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-button-arrow">
+                      <path d="M9 6.6503C9 6.6503 15.9383 6.1076 16.9154 7.0846C17.8925 8.0617 17.3496 15 17.3496 15M16.5 7.5L6.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                  </a>
+                  <a data-w-tab="Tab 3" class="faq-tab-link w-inline-block w-tab-link">
+                    <div class="faq-button-text">Pricing &amp; Payments</div><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-button-arrow">
+                      <path d="M9 6.6503C9 6.6503 15.9383 6.1076 16.9154 7.0846C17.8925 8.0617 17.3496 15 17.3496 15M16.5 7.5L6.5 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                  </a>
+                </div>
+                <div class="tabs-content w-tab-content">
+                  <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
+                    <div class="faq-right">
+                      <div class="faq-card">
+                        <div class="faq-top">
+                          <div class="faq-title">What services does StudioHue offer?</div>
+                          <div id="w-node-_1f2c900e-76a3-f5bf-2e84-dbfd95cc468d-e552070b" class="faq-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon">
+                              <g clip-path="url(#clip0_10248_8252)">
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8252">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon absolute">
+                              <g clip-path="url(#clip0_10248_8259)">
+                                <path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8259">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg></div>
+                        </div>
+                        <div class="faq-p-wrap">
+                          <p class="faq-paragraph">We specialize in brand identity, website design, Webflow development, UI/UX design, product design, and creative strategy to help businesses build impactful digital experiences.</p>
+                        </div>
+                      </div>
+                      <div class="faq-card">
+                        <div class="faq-top">
+                          <div class="faq-title">What types of businesses do you work with?</div>
+                          <div id="w-node-_1f2c900e-76a3-f5bf-2e84-dbfd95cc46a2-e552070b" class="faq-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon">
+                              <g clip-path="url(#clip0_10248_8252)">
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8252">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon absolute">
+                              <g clip-path="url(#clip0_10248_8259)">
+                                <path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8259">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg></div>
+                        </div>
+                        <div class="faq-p-wrap">
+                          <p class="faq-paragraph">We specialize in brand identity, website design, Webflow development, UI/UX design, product design, and creative strategy to help businesses build impactful digital experiences.</p>
+                        </div>
+                      </div>
+                      <div class="faq-card">
+                        <div class="faq-top">
+                          <div class="faq-title">How long does a typical project take?</div>
+                          <div id="w-node-_1f2c900e-76a3-f5bf-2e84-dbfd95cc46b7-e552070b" class="faq-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon">
+                              <g clip-path="url(#clip0_10248_8252)">
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8252">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon absolute">
+                              <g clip-path="url(#clip0_10248_8259)">
+                                <path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8259">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg></div>
+                        </div>
+                        <div class="faq-p-wrap">
+                          <p class="faq-paragraph">We specialize in brand identity, website design, Webflow development, UI/UX design, product design, and creative strategy to help businesses build impactful digital experiences.</p>
+                        </div>
+                      </div>
+                      <div class="faq-card">
+                        <div class="faq-top">
+                          <div class="faq-title">Do you build websites exclusively in Webflow?</div>
+                          <div id="w-node-_1f2c900e-76a3-f5bf-2e84-dbfd95cc46cc-e552070b" class="faq-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon">
+                              <g clip-path="url(#clip0_10248_8252)">
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8252">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon absolute">
+                              <g clip-path="url(#clip0_10248_8259)">
+                                <path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8259">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg></div>
+                        </div>
+                        <div class="faq-p-wrap">
+                          <p class="faq-paragraph">We specialize in brand identity, website design, Webflow development, UI/UX design, product design, and creative strategy to help businesses build impactful digital experiences.</p>
+                        </div>
+                      </div>
+                      <div class="faq-card">
+                        <div class="faq-top">
+                          <div class="faq-title">Can you redesign my existing website?</div>
+                          <div id="w-node-_1f2c900e-76a3-f5bf-2e84-dbfd95cc46e1-e552070b" class="faq-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon">
+                              <g clip-path="url(#clip0_10248_8252)">
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8252">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon absolute">
+                              <g clip-path="url(#clip0_10248_8259)">
+                                <path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8259">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg></div>
+                        </div>
+                        <div class="faq-p-wrap">
+                          <p class="faq-paragraph">We specialize in brand identity, website design, Webflow development, UI/UX design, product design, and creative strategy to help businesses build impactful digital experiences.</p>
+                        </div>
+                      </div>
+                      <div class="faq-card">
+                        <div class="faq-top">
+                          <div class="faq-title">Will my website be responsive?</div>
+                          <div id="w-node-_1f2c900e-76a3-f5bf-2e84-dbfd95cc46f6-e552070b" class="faq-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon">
+                              <g clip-path="url(#clip0_10248_8252)">
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8252">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon absolute">
+                              <g clip-path="url(#clip0_10248_8259)">
+                                <path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8259">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg></div>
+                        </div>
+                        <div class="faq-p-wrap">
+                          <p class="faq-paragraph">We specialize in brand identity, website design, Webflow development, UI/UX design, product design, and creative strategy to help businesses build impactful digital experiences.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div data-w-tab="Tab 2" class="w-tab-pane">
+                    <div class="faq-right">
+                      <div class="faq-card">
+                        <div class="faq-top">
+                          <div class="faq-title">How long does a typical project take?</div>
+                          <div id="w-node-_1f2c900e-76a3-f5bf-2e84-dbfd95cc470d-e552070b" class="faq-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon">
+                              <g clip-path="url(#clip0_10248_8252)">
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8252">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon absolute">
+                              <g clip-path="url(#clip0_10248_8259)">
+                                <path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8259">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg></div>
+                        </div>
+                        <div class="faq-p-wrap">
+                          <p class="faq-paragraph">We specialize in brand identity, website design, Webflow development, UI/UX design, product design, and creative strategy to help businesses build impactful digital experiences.</p>
+                        </div>
+                      </div>
+                      <div class="faq-card">
+                        <div class="faq-top">
+                          <div class="faq-title">What services does StudioHue offer?</div>
+                          <div id="w-node-_1f2c900e-76a3-f5bf-2e84-dbfd95cc4722-e552070b" class="faq-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon">
+                              <g clip-path="url(#clip0_10248_8252)">
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8252">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon absolute">
+                              <g clip-path="url(#clip0_10248_8259)">
+                                <path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8259">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg></div>
+                        </div>
+                        <div class="faq-p-wrap">
+                          <p class="faq-paragraph">We specialize in brand identity, website design, Webflow development, UI/UX design, product design, and creative strategy to help businesses build impactful digital experiences.</p>
+                        </div>
+                      </div>
+                      <div class="faq-card">
+                        <div class="faq-top">
+                          <div class="faq-title">Do you build websites exclusively in Webflow?</div>
+                          <div id="w-node-_1f2c900e-76a3-f5bf-2e84-dbfd95cc4737-e552070b" class="faq-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon">
+                              <g clip-path="url(#clip0_10248_8252)">
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8252">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon absolute">
+                              <g clip-path="url(#clip0_10248_8259)">
+                                <path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8259">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg></div>
+                        </div>
+                        <div class="faq-p-wrap">
+                          <p class="faq-paragraph">We specialize in brand identity, website design, Webflow development, UI/UX design, product design, and creative strategy to help businesses build impactful digital experiences.</p>
+                        </div>
+                      </div>
+                      <div class="faq-card">
+                        <div class="faq-top">
+                          <div class="faq-title">What types of businesses do you work with?</div>
+                          <div id="w-node-_1f2c900e-76a3-f5bf-2e84-dbfd95cc474c-e552070b" class="faq-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon">
+                              <g clip-path="url(#clip0_10248_8252)">
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8252">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon absolute">
+                              <g clip-path="url(#clip0_10248_8259)">
+                                <path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8259">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg></div>
+                        </div>
+                        <div class="faq-p-wrap">
+                          <p class="faq-paragraph">We specialize in brand identity, website design, Webflow development, UI/UX design, product design, and creative strategy to help businesses build impactful digital experiences.</p>
+                        </div>
+                      </div>
+                      <div class="faq-card">
+                        <div class="faq-top">
+                          <div class="faq-title">Can you redesign my existing website?</div>
+                          <div id="w-node-_1f2c900e-76a3-f5bf-2e84-dbfd95cc4761-e552070b" class="faq-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon">
+                              <g clip-path="url(#clip0_10248_8252)">
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8252">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon absolute">
+                              <g clip-path="url(#clip0_10248_8259)">
+                                <path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8259">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg></div>
+                        </div>
+                        <div class="faq-p-wrap">
+                          <p class="faq-paragraph">We specialize in brand identity, website design, Webflow development, UI/UX design, product design, and creative strategy to help businesses build impactful digital experiences.</p>
+                        </div>
+                      </div>
+                      <div class="faq-card">
+                        <div class="faq-top">
+                          <div class="faq-title">Will my website be responsive?</div>
+                          <div id="w-node-_1f2c900e-76a3-f5bf-2e84-dbfd95cc4776-e552070b" class="faq-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon">
+                              <g clip-path="url(#clip0_10248_8252)">
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8252">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon absolute">
+                              <g clip-path="url(#clip0_10248_8259)">
+                                <path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8259">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg></div>
+                        </div>
+                        <div class="faq-p-wrap">
+                          <p class="faq-paragraph">We specialize in brand identity, website design, Webflow development, UI/UX design, product design, and creative strategy to help businesses build impactful digital experiences.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div data-w-tab="Tab 3" class="w-tab-pane">
+                    <div class="faq-right">
+                      <div class="faq-card">
+                        <div class="faq-top">
+                          <div class="faq-title">What services does StudioHue offer?</div>
+                          <div id="w-node-_1f2c900e-76a3-f5bf-2e84-dbfd95cc478d-e552070b" class="faq-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon">
+                              <g clip-path="url(#clip0_10248_8252)">
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8252">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon absolute">
+                              <g clip-path="url(#clip0_10248_8259)">
+                                <path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8259">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg></div>
+                        </div>
+                        <div class="faq-p-wrap">
+                          <p class="faq-paragraph">We specialize in brand identity, website design, Webflow development, UI/UX design, product design, and creative strategy to help businesses build impactful digital experiences.</p>
+                        </div>
+                      </div>
+                      <div class="faq-card">
+                        <div class="faq-top">
+                          <div class="faq-title">What types of businesses do you work with?</div>
+                          <div id="w-node-_1f2c900e-76a3-f5bf-2e84-dbfd95cc47a2-e552070b" class="faq-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon">
+                              <g clip-path="url(#clip0_10248_8252)">
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8252">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon absolute">
+                              <g clip-path="url(#clip0_10248_8259)">
+                                <path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8259">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg></div>
+                        </div>
+                        <div class="faq-p-wrap">
+                          <p class="faq-paragraph">We specialize in brand identity, website design, Webflow development, UI/UX design, product design, and creative strategy to help businesses build impactful digital experiences.</p>
+                        </div>
+                      </div>
+                      <div class="faq-card">
+                        <div class="faq-top">
+                          <div class="faq-title">How long does a typical project take?</div>
+                          <div id="w-node-_1f2c900e-76a3-f5bf-2e84-dbfd95cc47b7-e552070b" class="faq-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon">
+                              <g clip-path="url(#clip0_10248_8252)">
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8252">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon absolute">
+                              <g clip-path="url(#clip0_10248_8259)">
+                                <path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8259">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg></div>
+                        </div>
+                        <div class="faq-p-wrap">
+                          <p class="faq-paragraph">We specialize in brand identity, website design, Webflow development, UI/UX design, product design, and creative strategy to help businesses build impactful digital experiences.</p>
+                        </div>
+                      </div>
+                      <div class="faq-card">
+                        <div class="faq-top">
+                          <div class="faq-title">Do you build websites exclusively in Webflow?</div>
+                          <div id="w-node-_1f2c900e-76a3-f5bf-2e84-dbfd95cc47cc-e552070b" class="faq-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon">
+                              <g clip-path="url(#clip0_10248_8252)">
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8252">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon absolute">
+                              <g clip-path="url(#clip0_10248_8259)">
+                                <path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8259">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg></div>
+                        </div>
+                        <div class="faq-p-wrap">
+                          <p class="faq-paragraph">We specialize in brand identity, website design, Webflow development, UI/UX design, product design, and creative strategy to help businesses build impactful digital experiences.</p>
+                        </div>
+                      </div>
+                      <div class="faq-card">
+                        <div class="faq-top">
+                          <div class="faq-title">Can you redesign my existing website?</div>
+                          <div id="w-node-_1f2c900e-76a3-f5bf-2e84-dbfd95cc47e1-e552070b" class="faq-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon">
+                              <g clip-path="url(#clip0_10248_8252)">
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8252">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon absolute">
+                              <g clip-path="url(#clip0_10248_8259)">
+                                <path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8259">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg></div>
+                        </div>
+                        <div class="faq-p-wrap">
+                          <p class="faq-paragraph">We specialize in brand identity, website design, Webflow development, UI/UX design, product design, and creative strategy to help businesses build impactful digital experiences.</p>
+                        </div>
+                      </div>
+                      <div class="faq-card">
+                        <div class="faq-top">
+                          <div class="faq-title">Will my website be responsive?</div>
+                          <div id="w-node-_1f2c900e-76a3-f5bf-2e84-dbfd95cc47f6-e552070b" class="faq-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon">
+                              <g clip-path="url(#clip0_10248_8252)">
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8252">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="faq-icon absolute">
+                              <g clip-path="url(#clip0_10248_8259)">
+                                <path d="M12 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_10248_8259">
+                                  <rect width="24" height="24" fill="currentColor"></rect>
+                                </clipPath>
+                              </defs>
+                            </svg></div>
+                        </div>
+                        <div class="faq-p-wrap">
+                          <p class="faq-paragraph">We specialize in brand identity, website design, Webflow development, UI/UX design, product design, and creative strategy to help businesses build impactful digital experiences.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="faq-info-card hide-desktop"><img src="/images/Rectangle-15-1.webp" loading="lazy" alt="Side profile of a person with digital light streaks blending and distorting their face and head." class="hero-small-img">
+                <div class="hero-card-right">
+                  <p class="hero-summary">Helping brands shine with smart digital experiences</p>
+                  <a href="/work" class="blog-button w-inline-block">
+                    <div class="blog-button-item home-hero">
+                      <div>Book a Discovery Call</div>
+                      <div class="button-arrow-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 18 18" fill="none" class="button-arrow">
+                          <path d="M10.5 3.69727L9.375 4.82227L12.8027 8.25H2.25V9.75H12.8027L9.375 13.1777L10.5 14.3027L15.8027 9L10.5 3.69727Z" fill="currentColor"></path>
+                        </svg><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 18 18" fill="none" class="button-arrow">
+                          <path d="M10.5 3.69727L9.375 4.82227L12.8027 8.25H2.25V9.75H12.8027L9.375 13.1777L10.5 14.3027L15.8027 9L10.5 3.69727Z" fill="currentColor"></path>
+                        </svg></div>
+                    </div>
+                    <div class="button-animated-line"></div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <Cta />
+    </div>
+    <Footer page="project" />
+  </div>
+</Base>

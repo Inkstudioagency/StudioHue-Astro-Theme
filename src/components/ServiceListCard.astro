@@ -1,0 +1,48 @@
+---
+/** Full-width service row on /service with the mouse-follow image interaction. */
+import type { ServiceEntry } from '../lib/content';
+import { serviceUrl } from '../lib/content';
+
+interface Props {
+  service: ServiceEntry;
+}
+const { service } = Astro.props;
+const { title, number, image, shortSummary, items } = service.data;
+const href = serviceUrl(service.data.slug);
+---
+
+<a data-w-id="53a8f8df-b2f1-0788-04ff-1d2656f7b8e8" href={href} class="service-card-main w-inline-block">
+  <div class="service-card-top">
+    <div class="service-card-top-left">
+      <div class="service-title">{title}</div>
+      <div class="service-number">{number}</div>
+    </div>
+    <div class="service-top-right">
+      <div class="service-arrow-wrap-02"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 20 20" fill="none" class="service-arrow">
+          <g clip-path="url(#clip0_10141_6972)">
+            <path d="M5.89941 14.1836L14.149 5.93401" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M14.2669 11.4734V5.81659" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M8.61035 5.81641H14.2672" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          </g>
+          <defs>
+            <clipPath id="clip0_10141_6972">
+              <rect width="20" height="20" fill="currentColor"></rect>
+            </clipPath>
+          </defs>
+        </svg></div>
+    </div>
+  </div>
+  <div class="service-card-bottom">
+    <div class="service-card-bottom-left">
+      <p class="service-card-summary">{shortSummary}</p>
+    </div>
+    <div class="service-bottom-riight">
+      {items.filter(Boolean).map((item) => (
+        <div class="service-pill">
+          <div>{item}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+  <div class="demo">#</div><img src={image} loading="lazy" alt="" sizes="(max-width: 767px) 97vw, (max-width: 991px) 704px, 910px" class="service-image"><img src={image} loading="lazy" alt="" sizes="(max-width: 767px) 97vw, (max-width: 991px) 704px, 910px" class="service-image">
+</a>

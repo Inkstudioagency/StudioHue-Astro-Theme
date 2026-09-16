@@ -1,0 +1,33 @@
+---
+/**
+ * <SeoMeta /> – title, description, Open Graph and Twitter tags.
+ * Falls back to the site-wide metadata in src/config/config.json.
+ */
+import config from '../config/config.json';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  /** When true the title is used verbatim; otherwise the site suffix is appended. */
+  rawTitle?: boolean;
+}
+
+const { title, description, image, rawTitle = false } = Astro.props;
+const { site, metadata } = config;
+
+const pageTitle = title ? (rawTitle ? title : `${title}${site.title_suffix}`) : metadata.meta_title;
+const pageDescription = description ?? metadata.meta_description;
+const ogImage = new URL(image ?? metadata.meta_image, Astro.site ?? site.base_url).href;
+---
+
+<title>{pageTitle}</title>
+<meta content={pageDescription} name="description" />
+<meta content={pageTitle} property="og:title" />
+<meta content={pageDescription} property="og:description" />
+<meta content={ogImage} property="og:image" />
+<meta content={pageTitle} name="twitter:title" />
+<meta content={pageDescription} name="twitter:description" />
+<meta content={ogImage} name="twitter:image" />
+<meta property="og:type" content="website" />
+<meta content={metadata.twitter_card} name="twitter:card" />

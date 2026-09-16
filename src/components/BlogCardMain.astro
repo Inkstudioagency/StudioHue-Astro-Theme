@@ -1,0 +1,31 @@
+---
+/** Post card in the /blog listing (dark background variant). */
+import type { PostEntry } from '../lib/content';
+import { postUrl, formatDate } from '../lib/content';
+import ArrowLink from './ArrowLink.astro';
+
+interface Props {
+  post: PostEntry;
+}
+const { post } = Astro.props;
+const { title, image, category, date } = post.data;
+const href = postUrl(post.data.slug);
+---
+
+<div class="blog-card-main">
+  <a href={href} class="blog-card-img-wrap w-inline-block"><img src={image} loading="lazy" alt="" sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 939px" class="blog-card-img">
+    <div class="demo">#</div>
+  </a>
+  <div class="blog-card-info-wrap">
+    <div class="post-date-wrap">
+      <div class="post-category brand-400">{category}</div>
+      <div class="post-devider-date white"></div>
+      <div class="post-date white">{formatDate(date)}</div>
+    </div>
+    <a href={href} class="blog-title-link-wrap w-inline-block">
+      <div class="post-title">{title}</div>
+      <div class="demo">#</div>
+    </a>
+    <ArrowLink label="Read Article" href={href} />
+  </div>
+</div>

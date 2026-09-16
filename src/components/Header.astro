@@ -1,0 +1,31 @@
+---
+/** Site navigation (Webflow navbar). Links come from src/config/menu.json. */
+import config from '../config/config.json';
+import menu from '../config/menu.json';
+import PrimaryButton from './PrimaryButton.astro';
+
+const { pathname } = Astro.url;
+const isCurrent = (url: string) => url === '/' ? pathname === '/' : pathname === url || pathname.startsWith(url + '/');
+const { site } = config;
+---
+
+<div id="header" data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar w-nav">
+  <div class="container w-container">
+    <div class="nav-item-wrap">
+      <a href="/" aria-current={isCurrent('/') ? 'page' : undefined} class:list={['brand', 'w-nav-brand', isCurrent('/') && 'w--current']}><img loading="lazy" src={site.logo} alt={site.logo_alt} class="brand-logo"></a>
+      <nav role="navigation" class="nav-menu w-nav-menu">
+        <div class="navlink-wrap">
+          {menu.main.map((item) => (
+            <a href={item.url} aria-current={isCurrent(item.url) ? 'page' : undefined} class:list={['navllink', 'w-nav-link', isCurrent(item.url) && 'w--current']}>{item.name}</a>
+          ))}
+        </div>
+      </nav>
+      <div class="nav-button-wrap">
+        <PrimaryButton label={menu.nav_button.name} href={menu.nav_button.url} variant="secondary" />
+      </div>
+      <div class="menu-button w-nav-button">
+        <div class="w-icon-nav-menu"></div>
+      </div>
+    </div>
+  </div>
+</div>

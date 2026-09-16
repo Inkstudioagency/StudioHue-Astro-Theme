@@ -1,0 +1,31 @@
+---
+/**
+ * Password-protected page design. Webflow handles the password check server-side
+ * (/.wf_auth); in Astro this is a static design page – wire the form to your own
+ * auth endpoint if you need real protection.
+ */
+import Base from '../layouts/Base.astro';
+import { wfPages } from '../lib/webflow-pages';
+---
+<Base page="protected" title="Protected page" description="This content is password protected. Enter the correct password to securely access the private StudioHue page and its available content.">
+  <div class="utility-page-wrap">
+    <div class="utility-page-content w-password-page w-form">
+      <form action="#" method="post" id="email-form" name="email-form" data-name="Email Form" class="utility-page-form w-password-page" data-wf-page-id={wfPages.protected.id} data-wf-element-id="6a7613258a633fcc5009e48600000000000c"><img src="/images/401_1401.avif" alt="" class="_401-image">
+        <div class="password-info-wrap">
+          <h1 class="_401-heading">Protected Page</h1>
+          <p class="font-regular tertiary">This page is encrypted and requires a password to view. Please enter the access code provided by your administrator.</p>
+        </div><label for="pass" class="font-regular w-password-page">Password</label><input class="text-field w-password-page w-input" autofocus="true" maxlength="256" name="pass" data-name="field" placeholder="Enter your password" type="password" id="pass"><input type="submit" data-wait="Please wait..." class="contact-submit-btn w-password-page w-button" value="Submit">
+        <div class="error-message w-password-page w-form-fail">
+          <div>Incorrect password. Please try again.</div>
+        </div>
+        <div style="display:none" class="w-password-page w-embed w-script">
+          <script is:inline type="application/javascript">(function _handlePasswordPageOnload() {
+	  if (/[?&]e=1(&|$)/.test(document.location.search)) {
+	    document.querySelector('.w-password-page.w-form-fail').style.display = 'block';
+	  }
+	})()</script>
+        </div>
+      </form>
+    </div>
+  </div>
+</Base>

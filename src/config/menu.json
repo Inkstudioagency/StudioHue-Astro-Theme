@@ -1,0 +1,58 @@
+{
+  "main": [
+    { "name": "Work", "url": "/work" },
+    { "name": "Studio", "url": "/about" },
+    { "name": "Services", "url": "/service" },
+    { "name": "Blog", "url": "/blog" }
+  ],
+  "nav_button": { "name": "Let’s Talk", "url": "/contact" },
+  "footer": [
+    {
+      "title": "STUDIO",
+      "links": [
+        { "name": "Home", "url": "/" },
+        { "name": "About", "url": "/about" },
+        { "name": "Services", "url": "/service" },
+        { "name": "Contact", "url": "/contact" }
+      ]
+    },
+    {
+      "title": "WORK",
+      "links": [
+        { "name": "Selected work", "url": "/work" },
+        { "name": "Case studies", "url": "/work" },
+        { "name": "Blog", "url": "/blog" },
+        { "name": "Blog Single", "url": "/post/10-easy-webflow-tips-to-boost-your-business-website" }
+      ]
+    },
+    {
+      "title": "WORK",
+      "links": [
+        { "name": "Style guide", "url": "/style-guide" },
+        { "name": "Password Protected", "url": "/401" },
+        { "name": "Change log", "url": "#" },
+        { "name": "Instruction", "url": "#" }
+      ]
+    },
+    {
+      "title": "CONNECT",
+      "links": [
+        { "name": "Instagram", "url": "https://www.instagram.com/", "target": "_blank" },
+        { "name": "LinkedIn", "url": "https://www.linkedin.com/", "target": "_blank" },
+        { "name": "Behance", "url": "https://www.behance.net/" },
+        { "name": "Dribbble", "url": "https://dribbble.com/" }
+      ]
+    }
+  ],
+  "footer_bottom": [
+    { "name": "404", "url": "/404" },
+    { "name": "Licenses", "url": "#" },
+    { "name": "Back to top ↑", "url": "#header" }
+  ],
+  "social": [
+    { "name": "Facebook", "url": "https://www.facebook.com/", "icon": "facebook" },
+    { "name": "X", "url": "https://x.com/", "icon": "x" },
+    { "name": "Instagram", "url": "https://www.instagram.com/", "icon": "instagram" },
+    { "name": "LinkedIn", "url": "https://www.linkedin.com/", "icon": "linkedin" }
+  ]
+}

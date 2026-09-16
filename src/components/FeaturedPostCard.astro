@@ -1,0 +1,36 @@
+---
+/** Large featured post card at the top of /blog. */
+import type { PostEntry } from '../lib/content';
+import { postUrl, formatDate } from '../lib/content';
+import PrimaryButton from './PrimaryButton.astro';
+
+interface Props {
+  post: PostEntry;
+}
+const { post } = Astro.props;
+const { title, image, category, date, summary } = post.data;
+const href = postUrl(post.data.slug);
+---
+
+<div class="blog-card-v2">
+  <a href={href} class="blog-img-wrap-v2 w-inline-block"><img src={image} loading="lazy" alt="" sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 939px" class="blog-card-img-v2">
+    <div class="demo">#</div>
+  </a>
+  <div class="blog-card-right">
+    <div class="blog-card-right-top">
+      <div class="post-date-wrap">
+        <div class="post-category">{category}</div>
+        <div class="post-devider-date white"></div>
+        <div class="post-date white">{formatDate(date)}</div>
+      </div>
+      <a href={href} class="blog-title-link w-inline-block">
+        <div class="blog-card-title">{title}</div>
+        <div class="demo">#</div>
+      </a>
+    </div>
+    <div class="blog-card-bottom">
+      <p class="font-regular tertiary">{summary}</p>
+      <PrimaryButton label="Read Article" href={href} />
+    </div>
+  </div>
+</div>
