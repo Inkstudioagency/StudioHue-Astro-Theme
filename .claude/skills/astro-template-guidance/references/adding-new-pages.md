@@ -8,7 +8,7 @@
 3. Pass a `page` key to both `<Base>` and `<Footer>`. Use the key of the page you copied from
    (`about`, `work`, `service`, `blog`, `contact`, `styleGuide`, `notFound`, `home`, `project`,
    `serviceDetail`, `post`). The key selects which Webflow interactions run and which elements start
-   hidden – see `src/lib/webflow-pages.ts`. Copying a page's sections with its key keeps the
+   hidden – see `src/lib/page-effects.ts`. Copying a page's sections with its key keeps the
    animations working.
 4. Give the page a `title` and `description` (`<Base title="…" description="…">`).
 5. Add it to `src/config/menu.json` if it should appear in the navigation or footer.

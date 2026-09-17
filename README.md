@@ -27,7 +27,7 @@ collections – **Services**, **Projects** (case studies) and **Blog** – that 
 | Content    | Astro content collections + custom Strapi loader, JSON fallback         |
 | CMS        | Strapi 5 (`../Strapi`, optional) with MCP server enabled                |
 | Styling    | Design-system CSS (custom properties) – `src/styles/`                   |
-| Motion     | GSAP 3 (+ SplitText, ScrollTrigger), Lenis, Webflow interactions runtime|
+| Motion     | GSAP 3 (+ SplitText, ScrollTrigger), Lenis, design interactions runtime|
 | Fonts      | BDO Grotesk (self-hosted), Geist + Instrument Serif (Google Fonts)      |
 
 ## Quick start
@@ -59,7 +59,7 @@ src/
 └── fonts/                 # BDO Grotesk
 public/
 ├── images/  videos/       # design assets (public/images/cms/ = collection images)
-└── js/                    # runtime: jquery, webflow.js, gsap, SplitText, ScrollTrigger, lenis, site.js
+└── js/                    # runtime: jquery, interactions.js, gsap, SplitText, ScrollTrigger, lenis, site.js
 scripts/csv-to-json.mjs    # converts a Webflow CMS CSV export into src/data/*.json
 .claude/skills/            # agent handbook (SKILL.md + references/) for this template
 ```
@@ -124,9 +124,9 @@ The `/style-guide` page lists the colours, type styles and button variants.
 
 ## Interactions runtime
 
-The design's animations run on `public/js/webflow.js` (Webflow's exported interactions engine).
+The design's animations run on `public/js/interactions.js` (the interactions engine exported with the original design).
 Each page passes its `page` key to `<Base>` so the runtime applies the right set of interactions –
-see `src/lib/webflow-pages.ts`. When you add a page, reuse the key of the page it was cloned from.
+see `src/lib/page-effects.ts`. When you add a page, reuse the key of the page it was cloned from.
 `public/js/site.js` holds the theme's own code (Lenis smooth scroll + counters).
 
 ## Deployment

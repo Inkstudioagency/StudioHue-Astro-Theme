@@ -20,8 +20,8 @@ content collections ┘
 - `src/lib/content.ts` – typed helpers (`getServices`, `getProjects`, `getPosts`,
   `getFeaturedPost`, `getRegularPosts`, URL builders, `formatDate`). Pages only use these.
 - `src/lib/strapi.ts` – REST client, media URL helper, `richText()` (HTML passthrough / Markdown → HTML).
-- `src/lib/webflow-pages.ts` – Webflow page ids + per-page "hidden until animated" selector lists,
-  consumed by `Base.astro` (`data-wf-page` attribute + inline `<style>`).
+- `src/lib/page-effects.ts` – Webflow page ids + per-page "hidden until animated" selector lists,
+  consumed by `Base.astro` (`data-page-id` attribute + inline `<style>`).
 
 ## Page anatomy
 
@@ -51,14 +51,14 @@ places the footer inside `main` (as in the original design); every other page pl
 `Base.astro` loads, at the end of `<body>`:
 
 1. `/js/jquery-3.5.1.min.js`
-2. `/js/webflow.js` – Webflow runtime: navbar, sliders, tabs, forms, background video, IX2/IX3 interactions
+2. `/js/interactions.js` – design interactions runtime: navbar, sliders, tabs, forms, background video, IX2/IX3 interactions
 3. `/js/gsap.min.js`, `/js/SplitText.min.js`, `/js/ScrollTrigger.min.js` – used by IX3 and site.js
 4. `/js/lenis.min.js`
 5. `/js/site.js` – Lenis smooth scroll + `[data-counter]` number animation
 
-All of them are classic scripts (`is:inline`) because `webflow.js` expects globals (`jQuery`, `gsap`).
-`webflow.js` contains one small patch (search for "StudioHue Astro patch"): the exported bundle
-carries every page's interactions, so `register()` filters them by the current `data-wf-page`.
+All of them are classic scripts (`is:inline`) because `interactions.js` expects globals (`jQuery`, `gsap`).
+`interactions.js` contains one small patch (search for "StudioHue Astro patch"): the exported bundle
+carries every page's interactions, so `register()` filters them by the current `data-page-id`.
 
 ## Static assets
 

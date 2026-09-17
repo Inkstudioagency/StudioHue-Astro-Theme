@@ -2,10 +2,10 @@
 /** Site footer: newsletter form, link columns (menu.json) and the large wordmark. */
 import config from '../config/config.json';
 import menu from '../config/menu.json';
-import { wfPages, type WfPageKey } from '../lib/webflow-pages';
+import { pageEffects, type PageKey } from '../lib/page-effects';
 
 interface Props {
-  page: WfPageKey;
+  page: PageKey;
 }
 const { page } = Astro.props;
 const { footer } = config;
@@ -20,7 +20,7 @@ const isCurrent = (url: string) => url === '/' ? pathname === '/' : pathname ===
         <div class="footer-top-left">
           <div class="footer-title">{footer.newsletter_title}</div>
           <div class="footer-form-main w-form">
-            <form id="email-form" name="email-form" data-name="Email Form" method="get" class="footer-form" data-wf-page-id={wfPages[page].id} data-wf-element-id="21d974b1-70a1-c74e-09ac-014e434b6ea2"><input class="footer-form-field w-input" maxlength="256" name="email" data-name="Email" aria-label="Email" placeholder={footer.newsletter_placeholder} type="email" id="email" required=""><input type="submit" data-wait="Please wait..." class="footer-form-button w-button" value={footer.newsletter_button}></form>
+            <form id="email-form" name="email-form" data-name="Email Form" method="get" class="footer-form" data-wf-page-id={pageEffects[page].id} data-wf-element-id="21d974b1-70a1-c74e-09ac-014e434b6ea2"><input class="footer-form-field w-input" maxlength="256" name="email" data-name="Email" aria-label="Email" placeholder={footer.newsletter_placeholder} type="email" id="email" required=""><input type="submit" data-wait="Please wait..." class="footer-form-button w-button" value={footer.newsletter_button}></form>
             <div class="success-message w-form-done">
               <div>Thank you! Your submission has been received!</div>
             </div>

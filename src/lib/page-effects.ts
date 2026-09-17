@@ -1,9 +1,7 @@
-// Webflow page ids + the per-page list of selectors that IX3 keeps hidden until the
-// page animations run. Both come from the original Webflow export and are consumed by
-// public/js/webflow.js (interactions are scoped by page id).
-export const SITE_ID = '6aa8d94a34bbb99ae552072f';
-
-export const wfPages = {
+// Per-page interaction ids and the list of selectors that stay hidden until a page's
+// entry animations run. Consumed by public/js/interactions.js, which scopes each page's
+// scroll/hover timelines by the id set on <html data-page-id>.
+export const pageEffects = {
   protected: {
     id: "6aa8d94a34bbb99ae5520715",
     hidden: ".footer-text.is-one, .footer-text.is-two, .cta-heading, .font-regular.tertiary, .cta-button-wrap, .cta-top-right, [to-top-2], .footer-large-title, .cta-card, .footer-absolute-bottom, .button-animated-line, .button-arrow-wrap, .button-arrow, .faq-p-wrap, .faq-icon.absolute, [to-top-0s], [to-top-2s], [to-top-4s], [to-top-6s], [to-top-8s], .footer-top-left, .footr-top-right, [title-animation], .animated-dot, .button-text-wrap, .badge, .section-heading, .section-header-right",
@@ -54,4 +52,4 @@ export const wfPages = {
   },
 } as const;
 
-export type WfPageKey = keyof typeof wfPages;
+export type PageKey = keyof typeof pageEffects;

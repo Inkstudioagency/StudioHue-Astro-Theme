@@ -24,7 +24,7 @@ clean.
 
 The markup mirrors the original design 1:1. Keep Webflow class names, wrapper structure
 (`.w-dyn-list` / `.w-slider` / `.w-tabs`) and the `page` key passed to `<Base>` / `<Footer>` –
-the interactions in `public/js/webflow.js` depend on them.
+the interactions in `public/js/interactions.js` depend on them.
 
 ## Documentation
 

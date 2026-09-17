@@ -1,4 +1,4 @@
-/* Custom code from the original template: Lenis smooth scroll + GSAP number counters. */
+/* Theme code: Lenis smooth scroll + GSAP number counters. */
 const lenis = new Lenis({
   smooth: true,
   lerp: 0.1,
@@ -12,8 +12,8 @@ function raf(time) {
 }
 requestAnimationFrame(raf);
 
-window.Webflow ||= [];
-window.Webflow.push(() => {
+window.StudioHue ||= [];
+window.StudioHue.push(() => {
   document.querySelectorAll("[data-counter]").forEach((counter) => {
     const textEl = counter.firstElementChild || counter;
     const original = textEl.textContent.trim();

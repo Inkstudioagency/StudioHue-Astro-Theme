@@ -25,11 +25,11 @@
     ]
   },
   "contact": {
-    "general_email": "hello@studiohue.studio",
-    "business_email": "work@studiohue.studio",
-    "phone": "+61 3 9000 0000",
-    "phone_link": "tel:+61390000000",
-    "address": "350 High St, Hawthorn, Victoria 3144, Australia"
+    "general_email": "example@example.com",
+    "business_email": "example@example.com",
+    "phone": "+1 (123) 123-4567",
+    "phone_link": "tel:+11231234567",
+    "address": "123 Example Street, Example City"
   },
   "cta": {
     "heading": "Ready for the next step?",

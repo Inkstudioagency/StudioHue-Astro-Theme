@@ -44,7 +44,7 @@ toggle; adapt the tokens above if you need one.
 
 ## Animations
 
-Reveal/hover interactions are defined inside `public/js/webflow.js` (Webflow IX3) and keyed to the
-page id set by `<Base page="…">`. Elements listed in `src/lib/webflow-pages.ts → hidden` start
+Reveal/hover interactions are defined inside `public/js/interactions.js` (Webflow IX3) and keyed to the
+page id set by `<Base page="…">`. Elements listed in `src/lib/page-effects.ts → hidden` start
 invisible and are revealed by those interactions; if you add a new class to an animated block,
 keep the original classes so the reveal still fires. Site-specific JS is in `public/js/site.js`.
