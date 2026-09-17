@@ -1,0 +1,88 @@
+{
+  "kind": "collectionType",
+  "collectionName": "services",
+  "info": {
+    "singularName": "service",
+    "pluralName": "services",
+    "displayName": "Service",
+    "description": "Services shown on the home page, /service and /services/<slug>"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "number": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "shortSummary": {
+      "type": "text"
+    },
+    "cardDetails": {
+      "type": "richtext"
+    },
+    "serviceItem1": {
+      "type": "string"
+    },
+    "serviceItem2": {
+      "type": "string"
+    },
+    "serviceItem3": {
+      "type": "string"
+    },
+    "serviceItem4": {
+      "type": "string"
+    },
+    "benefit1": {
+      "type": "richtext"
+    },
+    "benefit2": {
+      "type": "richtext"
+    },
+    "benefit3": {
+      "type": "richtext"
+    },
+    "benefit4": {
+      "type": "richtext"
+    },
+    "details01": {
+      "type": "richtext"
+    },
+    "details02": {
+      "type": "richtext"
+    },
+    "industries1": {
+      "type": "richtext"
+    },
+    "industries2": {
+      "type": "richtext"
+    },
+    "industries3": {
+      "type": "richtext"
+    },
+    "detailsHeading": {
+      "type": "string"
+    }
+  }
+}
